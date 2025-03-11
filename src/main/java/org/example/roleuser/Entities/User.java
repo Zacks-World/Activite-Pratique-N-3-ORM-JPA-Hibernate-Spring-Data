@@ -14,10 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Table(name = "USERS")
 public class User {
     @Id
     private String Userid;
-    @Column(unique = true, nullable = false,length = 20)
+    @Column(unique = true,length = 20)
     private String username;
     private String password;
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
