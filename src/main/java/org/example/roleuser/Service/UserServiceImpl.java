@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUsername(userName);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addRoleToUser(String username, String roleName) {
-        User user = userRepository.findByUserName(username);
+        User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByRoleName(roleName);
         if (user == null || role == null) {
             throw new RuntimeException("User or Role not found");
@@ -51,5 +51,17 @@ public class UserServiceImpl implements UserService {
         }
 
 
+    }
+
+    @Override
+    public User authenticate(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("Invalid username or password");
+        }
+        if (user.getPassword().equals(password)) {
+            return user;
+        }
+        throw new RuntimeException("Invalid username or password");
     }
 }
