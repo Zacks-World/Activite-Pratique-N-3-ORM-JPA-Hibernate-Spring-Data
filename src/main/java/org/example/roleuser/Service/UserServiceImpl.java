@@ -41,8 +41,15 @@ public class UserServiceImpl implements UserService {
     public void addRoleToUser(String username, String roleName) {
         User user = userRepository.findByUserName(username);
         Role role = roleRepository.findByRoleName(roleName);
-        user.getRoles().add(role);
-        userRepository.save(user);
+        if (user == null || role == null) {
+            throw new RuntimeException("User or Role not found");
+        }
+        if (user.getRoles()!=null && !user.getRoles().contains(role)) {
+            user.getRoles().add(role);
+            role.getUsers().add(user);
+            //userRepository.save(user); because of @Transactional that automatically save the user
+        }
+
 
     }
 }
