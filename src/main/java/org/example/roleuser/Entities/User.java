@@ -1,9 +1,6 @@
 package org.example.roleuser.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-    private Long Userid;
+    private String Userid;
+    @Column(unique = true, nullable = false,length = 20, name = "username")
     private String username;
     private String password;
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
